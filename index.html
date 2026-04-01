@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Chase — Oxford Indie Rock</title>
+  <meta name="description" content="The Chase are an Oxford-based indie rock band. Romantic, clever, loud. Originals from the dreaming spires." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =====================================================
+       TOKENS
+    ===================================================== */
+    :root {
+      --bg-void:      #050403;
+      --bg-deep:      #080705;
+      --bg-main:      #0d0b08;
+      --bg-elevated:  #141009;
+      --bg-card:      #1a1610;
+      --accent:       #c8841f;
+      --accent-hot:   #e06b1a;
+      --accent-glow:  rgba(200, 132, 31, 0.18);
+      --text-primary: #ede3d4;
+      --text-mid:     #b09e8c;
+      --text-dim:     #7a6e62;
+      --text-muted:   #4a4238;
+      --border:       #231f1a;
+      --border-warm:  #332c22;
+    }
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-primary);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Film grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      padding: 1.6rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.5s ease, padding 0.35s ease, border-color 0.5s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #navbar.scrolled {
+      background: rgba(5, 4, 3, 0.93);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 1.1rem 3rem;
+      border-bottom-color: var(--border);
+    }
+
+    .nav-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-brand:hover { color: var(--accent); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.25s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 100%;
+      height: 1px;
+      background: var(--accent);
+      transition: right 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { right: 0; }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 901;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 26px;
+      height: 1px;
+      background: var(--text-mid);
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile full-screen menu */
+    @media (max-width: 860px) {
+      #navbar { padding: 1.2rem 1.5rem; }
+      #navbar.scrolled { padding: 0.9rem 1.5rem; }
+
+      .nav-toggle { display: flex; }
+
+      .nav-links {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 4, 3, 0.97);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.8rem;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+      }
+      .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+      }
+      .nav-links a {
+        font-size: 1rem;
+        letter-spacing: 0.28em;
+      }
+    }
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+    #hero {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 7rem 2rem 10rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 25% 45%, rgba(200, 132, 31, 0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 75% 55%, rgba(224, 107, 26, 0.06) 0%, transparent 60%),
+        var(--bg-void);
+    }
+
+    /* Animated ember particles */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float var(--dur, 8s) ease-in-out infinite var(--delay, 0s);
+    }
+    @keyframes float {
+      0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+      15%  { opacity: 0.6; }
+      85%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.5); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 0.88;
+      color: var(--text-primary);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: heroReveal 1.1s cubic-bezier(0.23, 1, 0.32, 1) forwards 0.5s;
+    }
+    .hero-title .the {
+      display: block;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+    .hero-title .chase {
+      display: block;
+      font-size: clamp(5.5rem, 18vw, 17rem);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 0.9;
+    }
+
+    .hero-tagline {
+      margin-top: 2.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards 0.85s;
+    }
+    .hero-tagline span { color: var(--accent); margin: 0 0.6em; font-size: 0.6rem; vertical-align: middle; }
+
+    .hero-ctas {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards 1.1s;
+    }
+
+    /* Oxford skyline */
+    .hero-skyline {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      z-index: 1;
+      opacity: 0.1;
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      animation: heroReveal 0.9s ease forwards 1.6s;
+    }
+    .scroll-cue-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-cue-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: pulseDown 2.4s ease-in-out infinite;
+    }
+    @keyframes pulseDown {
+      0%, 100% { transform: scaleY(0.4); transform-origin: top; opacity: 0.3; }
+      50%       { transform: scaleY(1);   transform-origin: top; opacity: 1; }
+    }
+
+    @keyframes heroReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =====================================================
+       SHARED COMPONENTS
+    ===================================================== */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    section { padding: 7rem 0; }
+
+    .section-sep {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent 0%, var(--border-warm) 20%, var(--border-warm) 80%, transparent 100%);
+    }
+
+    .label {
+      display: block;
+      font-size: 0.63rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+    }
+
+    .rule {
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      margin-bottom: 2.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.88rem 2rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .btn-fill {
+      background: var(--accent);
+      color: var(--bg-void);
+    }
+    .btn-fill:hover {
+      background: var(--accent-hot);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(200, 132, 31, 0.35);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-warm);
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.85s cubic-bezier(0.23, 1, 0.32, 1), transform 0.85s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* =====================================================
+       ABOUT
+    ===================================================== */
+    #about { background: var(--bg-deep); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.95;
+      margin-bottom: 1.3rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-pull {
+      position: relative;
+      padding: 3rem 3rem 3rem 2.8rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .about-pull::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 9rem;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: 0.25;
+      position: absolute;
+      top: -2.5rem;
+      left: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .about-pull blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.45rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-primary);
+    }
+    .about-pull cite {
+      display: block;
+      margin-top: 1.2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    /* =====================================================
+       MEMBERS
+    ===================================================== */
+    #members { background: var(--bg-main); }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      margin-top: 3rem;
+    }
+
+    .member-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.5rem 2rem 2.5rem;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s;
+    }
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .member-card:hover {
+      border-color: var(--border-warm);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 0 0 var(--accent-glow);
+    }
+    .member-card:hover::before { transform: scaleX(1); }
+
+    .member-glyph {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent);
+      opacity: 0.18;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: opacity 0.35s;
+    }
+    .member-card:hover .member-glyph { opacity: 0.3; }
+
+    .member-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .member-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+    }
+    .member-bio {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+    }
+
+    /* =====================================================
+       MUSIC
+    ===================================================== */
+    #music {
+      background: var(--bg-deep);
+      position: relative;
+    }
+
+    .music-inner {
+      text-align: center;
+      padding: 2.5rem 0 0;
+    }
+    .music-inner .teaser {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      max-width: 560px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    .platforms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      justify-content: center;
+    }
+
+    .platform-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.7rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .platform-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-glow);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .platform-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .platform-btn:hover::before { opacity: 1; }
+    .platform-btn svg { width: 17px; height: 17px; fill: currentColor; flex-shrink: 0; }
+
+    /* =====================================================
+       GIGS
+    ===================================================== */
+    #gigs { background: var(--bg-main); }
+
+    .gigs-table { margin-top: 3rem; }
+
+    .gig-row {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 2.5rem;
+      align-items: center;
+      padding: 1.7rem 0;
+      border-top: 1px solid var(--border);
+      transition: padding-left 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .gig-row:last-child { border-bottom: 1px solid var(--border); }
+    .gig-row:hover { padding-left: 0.8rem; }
+
+    .gig-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+    }
+    .gig-date .d {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--text-primary);
+    }
+    .gig-date .my {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 0.2rem;
+    }
+
+    .gig-info .venue {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.22rem;
+    }
+    .gig-info .location {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .ticket-link {
+      display: inline-block;
+      padding: 0.55rem 1.3rem;
+      border: 1px solid var(--border-warm);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .ticket-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    .gig-note {
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      font-style: italic;
+    }
+
+    /* =====================================================
+       CONTACT
+    ===================================================== */
+    #contact { background: var(--bg-deep); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .contact-info p {
+      color: var(--text-mid);
+      font-size: 0.93rem;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200, 132, 31, 0.3);
+      padding-bottom: 0.2rem;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .email-link:hover { border-color: var(--accent); color: var(--accent-hot); }
+
+    .socials {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .social-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(200, 132, 31, 0.2);
+    }
+    .social-btn svg { width: 17px; height: 17px; fill: currentColor; }
+
+    /* Contact form */
+    .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .form-field { display: flex; flex-direction: column; gap: 0.45rem; }
+    .form-field label {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .form-field input,
+    .form-field textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.85rem 1rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      resize: none;
+      transition: border-color 0.25s;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--text-muted); }
+    .form-field input:focus,
+    .form-field textarea:focus { border-color: var(--accent); }
+    .form-field textarea { height: 110px; }
+
+    .form-success {
+      display: none;
+      padding: 1.2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    footer {
+      background: var(--bg-void);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .footer-meta {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+    @media (max-width: 860px) {
+      .container { padding: 0 1.5rem; }
+      section { padding: 5rem 0; }
+
+      .about-grid,
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      .members-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .gig-row {
+        grid-template-columns: 70px 1fr;
+        gap: 1.2rem;
+      }
+      .gig-action { grid-column: 2; }
+
+      footer { padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .platforms { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       NAVIGATION
+  ===================================================== -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-brand">The Chase</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about"   onclick="closeNav()">About</a></li>
+      <li><a href="#members" onclick="closeNav()">Band</a></li>
+      <li><a href="#music"   onclick="closeNav()">Music</a></li>
+      <li><a href="#gigs"    onclick="closeNav()">Gigs</a></li>
+      <li><a href="#contact" onclick="closeNav()">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- =====================================================
+       HERO
+  ===================================================== -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+
+    <!-- Floating ember particles -->
+    <div class="hero-particles" aria-hidden="true">
+      <div class="particle" style="left:12%; bottom:20%; --dur:9s;  --delay:0s;"></div>
+      <div class="particle" style="left:28%; bottom:15%; --dur:11s; --delay:1.5s;"></div>
+      <div class="particle" style="left:45%; bottom:25%; --dur:8s;  --delay:3s;"></div>
+      <div class="particle" style="left:61%; bottom:18%; --dur:12s; --delay:0.7s;"></div>
+      <div class="particle" style="left:78%; bottom:22%; --dur:10s; --delay:2.3s;"></div>
+      <div class="particle" style="left:88%; bottom:12%; --dur:9s;  --delay:4s;"></div>
+      <div class="particle" style="left:20%; bottom:35%; --dur:13s; --delay:1s;"></div>
+      <div class="particle" style="left:72%; bottom:40%; --dur:7s;  --delay:5s;"></div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Oxford, United Kingdom &nbsp;·&nbsp; Est. Since</p>
+      <h1 class="hero-title">
+        <span class="the">The</span>
+        <span class="chase">Chase</span>
+      </h1>
+      <p class="hero-tagline">
+        Indie Rock
+        <span>◆</span>
+        Originals
+        <span>◆</span>
+        Dreaming Spires
+      </p>
+      <div class="hero-ctas">
+        <a href="#music" class="btn btn-fill">Listen Now</a>
+        <a href="#gigs"  class="btn btn-ghost">Upcoming Gigs</a>
+      </div>
+    </div>
+
+    <!-- Oxford skyline silhouette -->
+    <svg class="hero-skyline" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Ground fill -->
+      <rect x="0" y="210" width="1440" height="90" fill="currentColor"/>
+
+      <!-- Battlements on wall -->
+      <rect x="80"   y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="114"  y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="320"  y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="354"  y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="1040" y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="1074" y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="1280" y="196" width="22" height="18" fill="currentColor"/>
+      <rect x="1314" y="196" width="22" height="18" fill="currentColor"/>
+
+      <!-- Far left spire cluster -->
+      <rect x="90"  y="80"  width="12" height="132" fill="currentColor"/>
+      <polygon points="96,58 84,84 108,84" fill="currentColor"/>
+      <rect x="120" y="108" width="10" height="104" fill="currentColor"/>
+      <polygon points="125,91 115,111 135,111" fill="currentColor"/>
+      <rect x="62"  y="118" width="10" height="94"  fill="currentColor"/>
+      <polygon points="67,103 57,120 77,120" fill="currentColor"/>
+
+      <!-- Left-centre tower (Christ Church-ish) -->
+      <rect x="420" y="72"  width="42" height="140" fill="currentColor"/>
+      <rect x="415" y="150" width="52" height="6"   fill="currentColor"/>
+      <rect x="427" y="72"  width="10" height="25"  fill="var(--bg-void)"/>
+      <rect x="444" y="72"  width="10" height="25"  fill="var(--bg-void)"/>
+      <polygon points="441,52 420,76 462,76" fill="currentColor"/>
+      <!-- Corner turrets -->
+      <rect x="413" y="98"  width="10" height="114" fill="currentColor"/>
+      <polygon points="418,86 410,102 426,102" fill="currentColor"/>
+      <rect x="459" y="98"  width="10" height="114" fill="currentColor"/>
+      <polygon points="464,86 456,102 472,102" fill="currentColor"/>
+
+      <!-- Radcliffe Camera dome -->
+      <rect x="685" y="148" width="70" height="64"  fill="currentColor"/>
+      <!-- Drum -->
+      <rect x="698" y="120" width="44" height="32"  fill="currentColor"/>
+      <!-- Colonnade suggestion -->
+      <rect x="688" y="140" width="64" height="6"   fill="var(--bg-void)"/>
+      <!-- Dome -->
+      <path d="M698 120 Q720 72 742 120 Z" fill="currentColor"/>
+      <rect x="712" y="84"  width="16" height="40"  fill="currentColor"/>
+      <ellipse cx="720" cy="83" rx="8"  ry="5"      fill="currentColor"/>
+      <!-- Lantern -->
+      <rect x="716" y="68"  width="8"  height="18"  fill="currentColor"/>
+      <ellipse cx="720" cy="67" rx="5"  ry="3"      fill="currentColor"/>
+      <rect x="718" y="56"  width="4"  height="14"  fill="currentColor"/>
+
+      <!-- Central tall spire (Magdalen Tower-ish) -->
+      <rect x="800" y="50"  width="20" height="162" fill="currentColor"/>
+      <!-- Pinnacles -->
+      <rect x="796" y="130" width="28" height="5"   fill="currentColor"/>
+      <rect x="796" y="50"  width="6"  height="22"  fill="var(--bg-void)"/>
+      <rect x="818" y="50"  width="6"  height="22"  fill="var(--bg-void)"/>
+      <polygon points="810,30 800,54 820,54" fill="currentColor"/>
+      <rect x="826" y="70"  width="8"  height="142" fill="currentColor"/>
+      <polygon points="830,56 823,73 837,73" fill="currentColor"/>
+      <rect x="784" y="70"  width="8"  height="142" fill="currentColor"/>
+      <polygon points="788,56 781,73 795,73" fill="currentColor"/>
+
+      <!-- Right-centre tower -->
+      <rect x="970" y="80"  width="38" height="132" fill="currentColor"/>
+      <rect x="965" y="152" width="48" height="6"   fill="currentColor"/>
+      <rect x="977" y="80"  width="9"  height="22"  fill="var(--bg-void)"/>
+      <rect x="993" y="80"  width="9"  height="22"  fill="var(--bg-void)"/>
+      <polygon points="989,60 970,84 1008,84" fill="currentColor"/>
+      <rect x="963" y="104" width="9"  height="108" fill="currentColor"/>
+      <polygon points="967,91 960,106 975,106" fill="currentColor"/>
+      <rect x="1009" y="104" width="9" height="108" fill="currentColor"/>
+      <polygon points="1013,91 1006,106 1020,106" fill="currentColor"/>
+
+      <!-- Far right spire cluster -->
+      <rect x="1330" y="88"  width="12" height="124" fill="currentColor"/>
+      <polygon points="1336,67 1324,91 1348,91" fill="currentColor"/>
+      <rect x="1360" y="110" width="10" height="102" fill="currentColor"/>
+      <polygon points="1365,95 1356,113 1374,113" fill="currentColor"/>
+      <rect x="1306" y="116" width="10" height="96"  fill="currentColor"/>
+      <polygon points="1311,102 1302,119 1320,119" fill="currentColor"/>
+
+      <!-- Wall windows -->
+      <rect x="200"  y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="226"  y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="560"  y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="586"  y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="870"  y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="896"  y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="1160" y="218" width="9" height="14" fill="var(--bg-void)"/>
+      <rect x="1186" y="218" width="9" height="14" fill="var(--bg-void)"/>
+    </svg>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-cue-line"></div>
+      <span class="scroll-cue-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       ABOUT
+  ===================================================== -->
+  <div class="section-sep"></div>
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <span class="label">About the Band</span>
+          <h2 class="heading">Born from the<br>Streets of Oxford</h2>
+          <div class="rule"></div>
+          <p>The Chase are an indie rock band from Oxford, UK — a city whose centuries of history, amber-lit cobblestones, and restless creative spirit runs through every note they play. Formed from a shared love of melody, wit, and raw guitar, the band have been part of Oxford's vibrant live music scene for years.</p>
+          <p>What started as a covers band — honing their craft across the pubs, arts venues, and late-night haunts of one of England's great musical cities — has evolved into something original, personal, and genuinely their own. The Chase now write and perform entirely original music: indie rock with a romantic streak and a clever edge.</p>
+          <p>Think punchy riffs and honest lyrics. Think late autumn in Oxford, warm light on wet stone, and songs that stay with you long after the last chord fades.</p>
+        </div>
+        <div class="about-pull reveal">
+          <blockquote>Songs that carry the weight of a city that's been dreaming out loud for eight hundred years.</blockquote>
+          <cite>The Chase &nbsp;·&nbsp; Oxford, UK</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       MEMBERS
+  ===================================================== -->
+  <div class="section-sep"></div>
+  <section id="members">
+    <div class="container">
+      <div class="reveal">
+        <span class="label">The Band</span>
+        <h2 class="heading">Meet the Members</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="members-grid">
+
+        <div class="member-card reveal" data-delay="0">
+          <div class="member-glyph">M</div>
+          <div class="member-name">Matt</div>
+          <div class="member-role">Vocals</div>
+          <p class="member-bio">The voice and lyrical centre of The Chase, Matt brings emotional depth and literary wit to every song. His writing draws from the romantic and the specific — stories of longing, connection, and the curious beauty of a city that never quite lets you go. On stage he's equal parts intensity and charm.</p>
+        </div>
+
+        <div class="member-card reveal" data-delay="1">
+          <div class="member-glyph">R</div>
+          <div class="member-name">Rob</div>
+          <div class="member-role">Drums &amp; Backing Vocals</div>
+          <p class="member-bio">The rhythmic heartbeat of the band, Rob drives the Chase's sound with precision, feel, and a certain restless energy that keeps every song moving. His backing vocals add warmth and texture to the mix, transforming solo melodies into something bigger and more powerful than any single part.</p>
+        </div>
+
+        <div class="member-card reveal" data-delay="2">
+          <div class="member-glyph">A</div>
+          <div class="member-name">Andy</div>
+          <div class="member-role">Guitar</div>
+          <p class="member-bio">Andy's guitar work is the defining sonic signature of The Chase — versatile, inventive, and never predictable. Whether shaping a delicate melodic line or unleashing a full-tilt chorus riff, he brings clarity and craft to every moment, turning the spaces between notes into something you can feel.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       MUSIC
+  ===================================================== -->
+  <div class="section-sep"></div>
+  <section id="music">
+    <div class="container">
+      <div class="reveal">
+        <span class="label">Music</span>
+        <h2 class="heading">Listen to<br>The Chase</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="music-inner reveal">
+        <p class="teaser">Original music on the way. The Chase are writing and recording their debut material — follow on your preferred platform to hear it first.</p>
+        <div class="platforms">
+
+          <!-- Spotify -->
+          <a href="#" class="platform-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Spotify
+          </a>
+
+          <!-- Apple Music -->
+          <a href="#" class="platform-btn">
+            <svg viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.064-2.31-2.22-3.03a5.022 5.022 0 00-1.8-.73c-.73-.15-1.47-.19-2.21-.19H6.476c-.74 0-1.48.04-2.21.19a5.022 5.022 0 00-1.8.73C1.31 1.624.563 2.624.246 3.934a9.23 9.23 0 00-.24 2.19C-.006 6.624 0 7.124 0 7.624v8.75c0 .5.006 1 .006 1.5a9.23 9.23 0 00.24 2.19c.317 1.31 1.064 2.31 2.22 3.03a5.022 5.022 0 001.8.73c.73.15 1.47.19 2.21.19h11.048c.74 0 1.48-.04 2.21-.19a5.022 5.022 0 001.8-.73c1.156-.72 1.903-1.72 2.22-3.03a9.23 9.23 0 00.24-2.19c0-.5.006-1 .006-1.5V7.624c0-.5-.006-1-.006-1.5zm-6.8 9.51a1.1 1.1 0 01-.55.73 1.1 1.1 0 01-.9.07l-3.87-1.04a1.095 1.095 0 01-.8-1.05V7.864c0-.25.11-.48.31-.63.2-.15.45-.2.69-.14l3.88 1.04c.41.11.69.48.69.9v6.576zm-2.3-5.13l-2.8-.75v4.21l2.8.75v-4.21z"/></svg>
+            Apple Music
+          </a>
+
+          <!-- YouTube -->
+          <a href="#" class="platform-btn">
+            <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            YouTube
+          </a>
+
+          <!-- Bandcamp -->
+          <a href="#" class="platform-btn">
+            <svg viewBox="0 0 24 24"><path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/></svg>
+            Bandcamp
+          </a>
+
+          <!-- SoundCloud -->
+          <a href="#" class="platform-btn">
+            <svg viewBox="0 0 24 24"><path d="M1.175 12.225c-.042 0-.067.025-.092.075l-.425 1.3.425 1.275c.025.05.05.075.092.075s.067-.025.092-.075l.483-1.275-.483-1.3c-.025-.05-.05-.075-.092-.075zm1.167-.575c-.05 0-.083.025-.1.075l-.358 1.875.358 1.85c.017.05.05.075.1.075s.083-.025.1-.075l.408-1.85-.408-1.875c-.017-.05-.05-.075-.1-.075zm1.175-.458c-.058 0-.1.025-.117.075l-.3 2.333.3 2.3c.017.05.058.075.117.075s.1-.025.117-.075l.342-2.3-.342-2.333c-.017-.05-.058-.075-.117-.075zm1.025-1.542c-.033 0-.067.017-.092.05l-1.475 3.092.417 2.483c.025.05.067.075.117.075s.092-.025.117-.075l.483-2.483-.45-3.075-.117-.067zm9.45 1.783a2.333 2.333 0 00-1.65.683 3.858 3.858 0 00-2.617-1.025 3.908 3.908 0 00-1.391.258c-.133.05-.167.1-.167.158v7.533c0 .075.05.133.125.142h5.7c.525 0 .95-.425.95-.95V13.35a2.317 2.317 0 00-2.317-2.317z"/></svg>
+            SoundCloud
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       GIGS
+  ===================================================== -->
+  <div class="section-sep"></div>
+  <section id="gigs">
+    <div class="container">
+      <div class="reveal">
+        <span class="label">Live</span>
+        <h2 class="heading">Upcoming Gigs</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="gigs-table reveal">
+
+        <div class="gig-row">
+          <div class="gig-date">
+            <span class="d">12</span>
+            <span class="my">Apr 2026</span>
+          </div>
+          <div class="gig-info">
+            <div class="venue">The Jericho Tavern</div>
+            <div class="location">56 Walton St, Oxford &nbsp;·&nbsp; Doors 8pm</div>
+          </div>
+          <div class="gig-action">
+            <a href="#" class="ticket-link">Tickets</a>
+          </div>
+        </div>
+
+        <div class="gig-row">
+          <div class="gig-date">
+            <span class="d">03</span>
+            <span class="my">May 2026</span>
+          </div>
+          <div class="gig-info">
+            <div class="venue">The Bullingdon</div>
+            <div class="location">162 Cowley Rd, Oxford &nbsp;·&nbsp; Doors 7:30pm</div>
+          </div>
+          <div class="gig-action">
+            <a href="#" class="ticket-link">Tickets</a>
+          </div>
+        </div>
+
+        <div class="gig-row">
+          <div class="gig-date">
+            <span class="d">21</span>
+            <span class="my">Jun 2026</span>
+          </div>
+          <div class="gig-info">
+            <div class="venue">O2 Academy Oxford</div>
+            <div class="location">190 Cowley Rd, Oxford &nbsp;·&nbsp; Doors 7pm</div>
+          </div>
+          <div class="gig-action">
+            <a href="#" class="ticket-link">Tickets</a>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="gig-note reveal">* Dates shown are placeholders — follow on social media for confirmed show announcements.</p>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CONTACT
+  ===================================================== -->
+  <div class="section-sep"></div>
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="reveal">
+          <span class="label">Get in Touch</span>
+          <h2 class="heading">Booking &amp;<br>Enquiries</h2>
+          <div class="rule"></div>
+          <p>For booking enquiries, press contact, or just to say hello — reach out directly. The Chase are available for live shows, private events, and collaborations across Oxfordshire and beyond.</p>
+          <a href="mailto:thechaseoxford@gmail.com" class="email-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            thechaseoxford@gmail.com
+          </a>
+          <div class="socials">
+            <a href="#" class="social-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="X (Twitter)">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Spotify">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact" />
+            <p style="display:none"><input name="bot-field" /></p>
+
+            <div class="form-field">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+            </div>
+            <div class="form-field">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="Booking, press, general…" />
+            </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your enquiry…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-fill" style="justify-content:center;">Send Message</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            Thanks for reaching out — we'll get back to you soon.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+  <footer>
+    <div class="footer-brand">The Chase</div>
+    <div class="footer-meta">© 2026 The Chase &nbsp;·&nbsp; Oxford, UK &nbsp;·&nbsp; All Rights Reserved</div>
+  </footer>
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+  <script>
+    // Nav scroll state
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+
+    function toggleNav() {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    function closeNav() {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Scroll reveal via IntersectionObserver
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const delay = parseFloat(entry.target.dataset.delay || 0) * 0.14;
+        entry.target.style.transitionDelay = `${delay}s`;
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Contact form: show success inline (Netlify will handle the real POST)
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', e => {
+        // If Netlify isn't handling it (local dev), show feedback anyway
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          e.preventDefault();
+          contactForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
