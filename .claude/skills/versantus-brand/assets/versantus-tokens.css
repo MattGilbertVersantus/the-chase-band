@@ -1,0 +1,161 @@
+/* =====================================================================
+   VERSANTUS BRAND TOKENS
+   Drop-in design tokens + base styles for the Versantus visual identity.
+   Requires Google Fonts: Outfit (headings) + Open Sans (body).
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+   ===================================================================== */
+
+:root {
+  /* --- Core palette (authoritative) --- */
+  --vs-pink:        #F0146E;   /* primary  */
+  --vs-purple:      #A445B2;   /* secondary */
+  --vs-amber:       #FFB800;   /* accent (use sparingly) */
+
+  /* --- Brand states / tints --- */
+  --vs-pink-dark:   #D1095C;
+  --vs-pink-tint:   #FBD0E2;
+  --vs-pink-wash:   #FDEEF4;
+  --vs-purple-dark: #8A3398;
+  --vs-purple-tint: #E7D3EC;
+  --vs-purple-wash: #F4EBF6;
+  --vs-amber-dark:  #E0A100;
+  --vs-amber-tint:  #FFE9B3;
+  --vs-amber-wash:  #FFF6E0;
+
+  /* --- Neutrals (harmonised, plum-tinted) --- */
+  --vs-ink:         #211B2E;   /* primary text on light */
+  --vs-ink-soft:    #5A5566;   /* secondary text */
+  --vs-paper:       #FFFFFF;   /* light background */
+  --vs-mist:        #F7F3F9;   /* light surface / cards */
+  --vs-cloud:       #EDE6F1;   /* borders / dividers */
+  --vs-night:       #16121F;   /* dark background */
+
+  /* --- Signature gradients --- */
+  --vs-gradient:        linear-gradient(135deg, #F0146E 0%, #A445B2 100%);
+  --vs-gradient-sunset: linear-gradient(135deg, #FFB800 0%, #F0146E 45%, #A445B2 100%);
+
+  /* --- Typography --- */
+  --vs-font-head: "Outfit", system-ui, sans-serif;
+  --vs-font-body: "Open Sans", system-ui, sans-serif;
+
+  --vs-display: clamp(2.75rem, 5vw + 1rem, 4.5rem);
+  --vs-h1:      clamp(2.25rem, 3vw + 1rem, 2.75rem);
+  --vs-h2:      clamp(1.75rem, 2vw + 1rem, 2rem);
+  --vs-h3:      1.5rem;
+  --vs-lead:    1.25rem;
+  --vs-body:    1rem;
+  --vs-small:   0.875rem;
+
+  /* --- Radius --- */
+  --vs-r-sm:   8px;
+  --vs-r-md:   16px;
+  --vs-r-lg:   24px;
+  --vs-r-pill: 999px;
+
+  /* --- Spacing (8pt) --- */
+  --vs-1: 4px;  --vs-2: 8px;  --vs-3: 12px; --vs-4: 16px;
+  --vs-5: 24px; --vs-6: 32px; --vs-7: 48px; --vs-8: 64px; --vs-9: 96px;
+
+  /* --- Shadows (soft, coloured) --- */
+  --vs-shadow-card:  0 10px 30px rgba(33, 27, 46, 0.08);
+  --vs-shadow-brand: 0 16px 40px rgba(240, 20, 110, 0.22);
+}
+
+/* ---------------------------------------------------------------------
+   Base styles
+   --------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--vs-font-body);
+  font-size: var(--vs-body);
+  line-height: 1.6;
+  color: var(--vs-ink);
+  background: var(--vs-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vs-font-head);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--vs-ink);
+  margin: 0 0 var(--vs-4);
+}
+h1 { font-size: var(--vs-h1); }
+h2 { font-size: var(--vs-h2); }
+h3 { font-size: var(--vs-h3); letter-spacing: -0.01em; }
+
+p { margin: 0 0 var(--vs-4); max-width: 70ch; }
+.vs-lead { font-size: var(--vs-lead); color: var(--vs-ink-soft); }
+
+a { color: var(--vs-pink); font-weight: 600; text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--vs-amber); }
+
+/* ---------------------------------------------------------------------
+   Utility / component classes
+   --------------------------------------------------------------------- */
+
+/* Eyebrow label */
+.vs-eyebrow {
+  font-family: var(--vs-font-head);
+  font-weight: 600;
+  font-size: var(--vs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vs-pink);
+}
+
+/* Display heading + gradient word */
+.vs-display { font-family: var(--vs-font-head); font-weight: 800;
+  font-size: var(--vs-display); line-height: 1.05; letter-spacing: -0.02em; }
+.vs-gradient-text {
+  background: var(--vs-gradient);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+
+/* Surfaces */
+.vs-hero { background: var(--vs-gradient); color: #fff; }
+.vs-hero h1, .vs-hero h2, .vs-hero h3 { color: #fff; }
+.vs-section-mist { background: var(--vs-mist); }
+.vs-section-dark { background: var(--vs-night); color: #fff; }
+.vs-section-dark h1, .vs-section-dark h2, .vs-section-dark h3 { color: #fff; }
+
+/* Buttons */
+.vs-btn {
+  display: inline-flex; align-items: center; gap: var(--vs-2);
+  font-family: var(--vs-font-head); font-weight: 600; font-size: var(--vs-body);
+  padding: 0.85em 1.6em; border-radius: var(--vs-r-pill);
+  border: 1.5px solid transparent; cursor: pointer; transition: all .18s ease;
+}
+.vs-btn--primary { background: var(--vs-pink); color: #fff; box-shadow: var(--vs-shadow-brand); }
+.vs-btn--primary:hover { background: var(--vs-pink-dark); transform: translateY(-2px); text-decoration: none; }
+.vs-btn--secondary { background: transparent; color: var(--vs-pink); border-color: var(--vs-pink); }
+.vs-btn--secondary:hover { background: var(--vs-pink-wash); text-decoration: none; }
+.vs-btn--on-dark { background: #fff; color: var(--vs-pink); }
+.vs-btn--on-dark:hover { background: var(--vs-mist); text-decoration: none; }
+
+/* Card */
+.vs-card {
+  background: var(--vs-paper); border-radius: var(--vs-r-lg);
+  padding: var(--vs-6); box-shadow: var(--vs-shadow-card);
+  border-top: 4px solid transparent; border-image: var(--vs-gradient) 1;
+}
+
+/* Tag / pill */
+.vs-tag {
+  display: inline-block; background: var(--vs-pink-wash); color: var(--vs-pink);
+  font-family: var(--vs-font-body); font-weight: 600; font-size: var(--vs-small);
+  padding: 4px 12px; border-radius: var(--vs-r-pill);
+}
+
+/* Stat */
+.vs-stat__num { font-family: var(--vs-font-head); font-weight: 800; font-size: 2.5rem; color: var(--vs-pink); line-height: 1; }
+.vs-stat__num--amber { color: var(--vs-amber); }
+.vs-stat__label { font-size: var(--vs-small); color: var(--vs-ink-soft); }
+
+/* Amber underline accent */
+.vs-underline { box-shadow: inset 0 -0.35em 0 var(--vs-amber-tint); }

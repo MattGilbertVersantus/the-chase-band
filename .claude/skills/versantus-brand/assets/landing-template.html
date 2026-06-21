@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Versantus — Page Template</title>
+<meta name="description" content="Versantus on-brand landing page starter." />
+<!--
+  VERSANTUS LANDING / SECTION TEMPLATE
+  A clean, on-brand starting point. Uses the brand tokens inline so it renders
+  standalone; for projects, link assets/versantus-tokens.css instead and delete
+  the :root block below. Edit copy using references/voice-and-tone.md.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --vs-pink:#F0146E; --vs-purple:#A445B2; --vs-amber:#FFB800;
+    --vs-pink-dark:#D1095C; --vs-pink-wash:#FDEEF4;
+    --vs-ink:#211B2E; --vs-ink-soft:#5A5566; --vs-mist:#F7F3F9; --vs-cloud:#EDE6F1;
+    --vs-night:#16121F;
+    --vs-gradient:linear-gradient(135deg,#F0146E 0%,#A445B2 100%);
+    --vs-font-head:"Outfit",sans-serif; --vs-font-body:"Open Sans",sans-serif;
+    --vs-shadow-card:0 10px 30px rgba(33,27,46,.08);
+    --vs-shadow-brand:0 16px 40px rgba(240,20,110,.22);
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  body { margin:0; font-family:var(--vs-font-body); color:var(--vs-ink);
+         line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3 { font-family:var(--vs-font-head); font-weight:700; line-height:1.1;
+             letter-spacing:-0.02em; margin:0 0 16px; }
+  p { margin:0 0 16px; }
+  .wrap { max-width:1160px; margin:0 auto; padding:0 32px; }
+  .grad { background:var(--vs-gradient); -webkit-background-clip:text;
+          background-clip:text; -webkit-text-fill-color:transparent; }
+  .eyebrow { font-family:var(--vs-font-head); font-weight:600; font-size:.85rem;
+             text-transform:uppercase; letter-spacing:.08em; color:var(--vs-pink); }
+  .btn { display:inline-flex; align-items:center; gap:8px; font-family:var(--vs-font-head);
+         font-weight:600; padding:.85em 1.6em; border-radius:999px; border:1.5px solid transparent;
+         text-decoration:none; cursor:pointer; transition:all .18s ease; }
+  .btn--primary { background:var(--vs-pink); color:#fff; box-shadow:var(--vs-shadow-brand); }
+  .btn--primary:hover { background:var(--vs-pink-dark); transform:translateY(-2px); }
+  .btn--ghost { background:transparent; color:#fff; border-color:rgba(255,255,255,.6); }
+  .btn--ghost:hover { background:rgba(255,255,255,.12); }
+
+  /* Nav */
+  .nav { display:flex; align-items:center; justify-content:space-between; padding:24px 0; }
+  .nav__brand { font-family:var(--vs-font-head); font-weight:700; font-size:1.4rem;
+                letter-spacing:-0.01em; color:var(--vs-ink); text-decoration:none; }
+  .nav__links { display:flex; gap:28px; align-items:center; }
+  .nav__links a { color:var(--vs-ink); text-decoration:none; font-weight:600; font-size:.95rem; }
+  .nav__links a:hover { color:var(--vs-pink); }
+
+  /* Hero */
+  .hero { background:var(--vs-gradient); color:#fff; position:relative; overflow:hidden; }
+  .hero::after { content:""; position:absolute; width:520px; height:520px; border-radius:50%;
+                 background:var(--vs-amber); opacity:.18; right:-160px; top:-160px; }
+  .hero .wrap { position:relative; padding-top:64px; padding-bottom:96px; }
+  .hero h1 { color:#fff; font-size:clamp(2.6rem,5vw + 1rem,4.25rem); max-width:16ch; }
+  .hero .eyebrow { color:#fff; opacity:.9; }
+  .hero p { font-size:1.25rem; max-width:48ch; opacity:.95; }
+  .hero__cta { display:flex; gap:16px; flex-wrap:wrap; margin-top:32px; }
+
+  /* Stats strip */
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+           background:#fff; border-radius:24px; padding:40px; margin-top:-56px;
+           position:relative; box-shadow:var(--vs-shadow-card); }
+  .stat__num { font-family:var(--vs-font-head); font-weight:800; font-size:2.75rem;
+               color:var(--vs-pink); line-height:1; }
+  .stat__num--amber { color:var(--vs-amber); }
+  .stat__label { color:var(--vs-ink-soft); font-size:.95rem; }
+
+  /* Feature cards */
+  section { padding:96px 0; }
+  .section-head { max-width:38ch; margin-bottom:48px; }
+  .section-head h2 { font-size:clamp(1.9rem,2.5vw + 1rem,2.5rem); }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .card { background:#fff; border-radius:24px; padding:32px; box-shadow:var(--vs-shadow-card);
+          border-top:4px solid var(--vs-pink); }
+  .card h3 { font-size:1.3rem; }
+  .card p { color:var(--vs-ink-soft); margin-bottom:0; }
+  .icon { width:56px; height:56px; border-radius:16px; background:var(--vs-pink-wash);
+          display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:20px; }
+  .card:nth-child(2) { border-top-color:var(--vs-purple); }
+  .card:nth-child(2) .icon { background:#F4EBF6; }
+  .card:nth-child(3) { border-top-color:var(--vs-amber); }
+  .card:nth-child(3) .icon { background:#FFF6E0; }
+
+  .mist { background:var(--vs-mist); }
+
+  /* CTA band */
+  .cta { background:var(--vs-night); color:#fff; border-radius:32px; padding:64px;
+         text-align:center; }
+  .cta h2 { color:#fff; font-size:2.25rem; }
+  .cta p { color:#cfc8d8; max-width:44ch; margin:0 auto 28px; }
+
+  /* Footer */
+  footer.site { padding:48px 0; border-top:1px solid var(--vs-cloud); color:var(--vs-ink-soft);
+                font-size:.9rem; display:flex; justify-content:space-between; align-items:center; }
+
+  @media (max-width:780px){ .grid3,.stats{ grid-template-columns:1fr; } .nav__links{ display:none; } }
+</style>
+</head>
+<body>
+
+  <header class="wrap">
+    <nav class="nav">
+      <a class="nav__brand" href="#">Versantus</a>
+      <div class="nav__links">
+        <a href="#">Work</a><a href="#">Services</a><a href="#">About</a>
+        <a class="btn btn--primary" href="#" style="box-shadow:none;color:#fff">Say hello →</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Transformative digital</span>
+      <h1>We build world-class websites and software for <span class="amber" style="color:var(--vs-amber)">ambitious</span> organisations.</h1>
+      <p>Clear, honest, jargon-free digital — designed and built in Oxford by a team that genuinely cares.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#" style="background:#fff;color:var(--vs-pink);box-shadow:none">See our work →</a>
+        <a class="btn btn--ghost" href="#">Start a project</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="wrap">
+    <div class="stats">
+      <div><div class="stat__num">15+</div><div class="stat__label">years building digital</div></div>
+      <div><div class="stat__num stat__num--amber">100s</div><div class="stat__label">of products shipped</div></div>
+      <div><div class="stat__num">#1</div><div class="stat__label">Best Workplace in Tech</div></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">What we do</span>
+        <h2>Strategy, design and build — <span class="grad">all under one roof</span>.</h2>
+      </div>
+      <div class="grid3">
+        <article class="card">
+          <div class="icon">🎯</div>
+          <h3>Strategy &amp; UX</h3>
+          <p>We start with your users and your goals, then design experiences that are a genuine pleasure to use.</p>
+        </article>
+        <article class="card">
+          <div class="icon">💻</div>
+          <h3>Design &amp; build</h3>
+          <p>Beautiful, accessible websites and software — built to be fast, secure and easy to run.</p>
+        </article>
+        <article class="card">
+          <div class="icon">📈</div>
+          <h3>Grow &amp; support</h3>
+          <p>SEO, marketing and ongoing care that turn a launch into measurable, lasting results.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mist">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Got something ambitious in mind?</h2>
+        <p>Tell us where you want to get to. We'll help you build the digital to get there.</p>
+        <a class="btn btn--primary" href="#">Say hello →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site wrap">
+    <span>© Versantus — Oxford, UK</span>
+    <span>versantus.co.uk</span>
+  </footer>
+
+</body>
+</html>

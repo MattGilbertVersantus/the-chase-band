@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Versantus — Social Card Template</title>
+<!--
+  VERSANTUS SOCIAL CARD TEMPLATE
+  - Default canvas: 1080×1080 (square). For portrait LinkedIn/IG use 1080×1350:
+    change .card height to 1350px.
+  - Edit: .eyebrow, the <h1>, the gradient word span, .sub, and the footer.
+  - To screenshot at exact size, render and capture the .card element.
+  - Swap the layout class on <body>: "layout-gradient" (hero gradient) or
+    "layout-light" (white card with gradient accents).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --vs-pink:#F0146E; --vs-purple:#A445B2; --vs-amber:#FFB800;
+    --vs-ink:#211B2E; --vs-mist:#F7F3F9; --vs-night:#16121F;
+    --vs-gradient:linear-gradient(135deg,#F0146E 0%,#A445B2 100%);
+    --vs-font-head:"Outfit",sans-serif; --vs-font-body:"Open Sans",sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { display:flex; align-items:center; justify-content:center; min-height:100vh;
+         background:#ddd; font-family:var(--vs-font-body); }
+
+  .card {
+    position:relative; width:1080px; height:1080px; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:96px; color:#fff;
+  }
+
+  /* --- Variant A: gradient hero (default) --- */
+  body.layout-gradient .card { background:var(--vs-gradient); }
+  /* --- Variant B: light --- */
+  body.layout-light .card { background:#fff; color:var(--vs-ink); }
+  body.layout-light .eyebrow { color:var(--vs-pink); }
+  body.layout-light .footer__brand,
+  body.layout-light .footer__url { color:var(--vs-ink); }
+
+  /* Decorative soft blobs */
+  .blob { position:absolute; border-radius:50%; filter:blur(2px); opacity:.5; }
+  .blob--amber { width:260px; height:260px; background:var(--vs-amber);
+                 right:-60px; top:-60px; opacity:.35; }
+  .blob--ring { width:420px; height:420px; right:-120px; bottom:-140px;
+                border:60px solid rgba(255,255,255,.12); background:transparent; }
+  body.layout-light .blob--ring { border-color:var(--vs-purple); opacity:.10; }
+
+  .eyebrow { position:relative; font-family:var(--vs-font-head); font-weight:600;
+             font-size:26px; text-transform:uppercase; letter-spacing:0.12em;
+             color:#fff; }
+
+  .headline { position:relative; font-family:var(--vs-font-head); font-weight:800;
+              font-size:104px; line-height:1.02; letter-spacing:-0.025em;
+              max-width:14ch; }
+  /* In the light variant, wrap a key word in this for the gradient pop */
+  .grad { background:var(--vs-gradient); -webkit-background-clip:text;
+          background-clip:text; -webkit-text-fill-color:transparent; }
+  .amber { color:var(--vs-amber); }
+
+  .sub { position:relative; font-family:var(--vs-font-body); font-size:34px;
+         line-height:1.45; max-width:24ch; margin-top:32px; opacity:.95; }
+
+  .footer { position:relative; display:flex; align-items:center;
+            justify-content:space-between; }
+  .footer__brand { font-family:var(--vs-font-head); font-weight:700; font-size:34px;
+                   color:#fff; letter-spacing:-0.01em; }
+  .footer__url { font-family:var(--vs-font-body); font-weight:600; font-size:26px;
+                 color:#fff; opacity:.85; }
+  .pill { display:inline-flex; align-items:center; gap:14px;
+          background:rgba(255,255,255,.15); padding:14px 28px; border-radius:999px;
+          font-family:var(--vs-font-head); font-weight:600; font-size:26px; }
+  body.layout-light .pill { background:var(--vs-pink); color:#fff; }
+  .dot { width:18px; height:18px; border-radius:50%; background:var(--vs-amber); }
+</style>
+</head>
+
+<!-- Swap class to "layout-light" for the white variant -->
+<body class="layout-gradient">
+  <div class="card">
+    <span class="blob blob--amber"></span>
+    <span class="blob blob--ring"></span>
+
+    <header>
+      <span class="eyebrow">Transformative digital</span>
+    </header>
+
+    <div>
+      <h1 class="headline">World-class websites, <span class="amber">built in Oxford</span>.</h1>
+      <p class="sub">We help ambitious organisations build digital products people love to use.</p>
+    </div>
+
+    <footer class="footer">
+      <span class="footer__brand">Versantus</span>
+      <span class="pill"><span class="dot"></span> versantus.co.uk</span>
+    </footer>
+  </div>
+</body>
+</html>
