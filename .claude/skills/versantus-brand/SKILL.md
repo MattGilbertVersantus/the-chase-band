@@ -46,8 +46,8 @@ Rules:
    defines every colour, font, spacing, radius and shadow as CSS variables. Link the
    Google Fonts (Outfit + Open Sans) shown below. Don't invent new colours.
 3. **Build from a template.** Use `assets/social-card-template.html` (1080×1080 / 1080×1350
-   posts) or `assets/landing-template.html` (web sections) as the starting structure,
-   then adapt content.
+   posts), `assets/linkedin-carousel-template.html` (multi-slide PDF carousels), or
+   `assets/landing-template.html` (web sections) as the starting structure, then adapt content.
 4. **Write the copy** using `references/voice-and-tone.md`.
 5. **Check against the brand checklist** in `references/brand-guidelines.md` before
    delivering.
@@ -85,8 +85,11 @@ body, p   { font-family: "Open Sans", sans-serif; line-height: 1.6; color: var(-
   scale, gradients, components, logo usage, do/don't, and the pre-delivery checklist.
 - `references/voice-and-tone.md` — how Versantus writes: principles, sentence patterns,
   vocabulary, social caption formulas, and worked before/after examples.
+- `references/linkedin-carousel.md` — how to build a LinkedIn carousel (document post):
+  specs, slide structure, copy guidance, and how to export the deck to PDF.
 - `assets/versantus-tokens.css` — drop-in CSS variables + base styles.
 - `assets/social-card-template.html` — ready-to-edit Instagram/LinkedIn post.
+- `assets/linkedin-carousel-template.html` — multi-slide LinkedIn carousel, print-to-PDF ready.
 - `assets/landing-template.html` — ready-to-edit web page / section.
 
 Sources: brand fundamentals are the canonical Versantus spec; positioning and voice

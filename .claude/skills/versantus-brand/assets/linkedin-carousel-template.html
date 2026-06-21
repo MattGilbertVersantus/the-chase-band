@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Versantus — LinkedIn Carousel Template</title>
+<!--
+  VERSANTUS LINKEDIN CAROUSEL TEMPLATE
+  Each <section class="slide"> = one PDF page = one swipeable LinkedIn slide.
+  Canvas: 1080 × 1350 px (4:5 portrait).
+
+  EDIT:  cover hook, content slides (one idea each), CTA. Add/remove slides to
+         get 6–10 total. Rotate per-slide accent with the modifier classes
+         (slide--pink / slide--purple / slide--amber) and the accent chips.
+
+  EXPORT TO PDF (each slide becomes one page):
+    Chrome → Print → Save as PDF, margins None, Background graphics ON.
+    Or:  chrome --headless --print-to-pdf=carousel.pdf --no-pdf-header-footer \
+             linkedin-carousel-template.html
+  Then upload the PDF to LinkedIn as a Document post.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --vs-pink:#F0146E; --vs-purple:#A445B2; --vs-amber:#FFB800;
+    --vs-ink:#211B2E; --vs-ink-soft:#5A5566; --vs-mist:#F7F3F9; --vs-night:#16121F;
+    --vs-gradient:linear-gradient(135deg,#F0146E 0%,#A445B2 100%);
+    --vs-font-head:"Outfit",sans-serif; --vs-font-body:"Open Sans",sans-serif;
+  }
+  *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+  /* PDF page = exact slide size */
+  @page { size:1080px 1350px; margin:0; }
+
+  body { background:#cfc8d8; font-family:var(--vs-font-body); color:var(--vs-ink);
+         display:flex; flex-direction:column; align-items:center; gap:24px; padding:24px; }
+
+  .slide {
+    position:relative; width:1080px; height:1350px; overflow:hidden;
+    padding:88px; display:flex; flex-direction:column; background:#fff;
+    break-after:page; page-break-after:always;
+  }
+  .slide:last-child { break-after:auto; page-break-after:auto; }
+
+  /* Surfaces */
+  .slide--gradient { background:var(--vs-gradient); color:#fff; }
+  .slide--dark     { background:var(--vs-night); color:#fff; }
+  .slide--mist     { background:var(--vs-mist); }
+
+  /* Decorative */
+  .blob { position:absolute; border-radius:50%; pointer-events:none; }
+  .blob--amber { width:300px; height:300px; background:var(--vs-amber); opacity:.30;
+                 right:-80px; top:-80px; }
+  .blob--ring  { width:460px; height:460px; border:64px solid rgba(255,255,255,.12);
+                 right:-150px; bottom:-170px; }
+
+  /* Shared bits */
+  .eyebrow { font-family:var(--vs-font-head); font-weight:600; font-size:28px;
+             text-transform:uppercase; letter-spacing:.12em; color:var(--vs-pink); }
+  .slide--gradient .eyebrow, .slide--dark .eyebrow { color:#fff; opacity:.92; }
+
+  .spacer { flex:1; }
+
+  .num { font-family:var(--vs-font-head); font-weight:800; font-size:34px;
+         width:84px; height:84px; border-radius:50%; display:flex; align-items:center;
+         justify-content:center; color:#fff; margin-bottom:40px; }
+  .num--pink   { background:var(--vs-pink); }
+  .num--purple { background:var(--vs-purple); }
+  .num--amber  { background:var(--vs-amber); color:var(--vs-ink); }
+
+  .bar { width:96px; height:10px; border-radius:999px; margin-bottom:36px; }
+  .bar--pink{background:var(--vs-pink)} .bar--purple{background:var(--vs-purple)} .bar--amber{background:var(--vs-amber)}
+
+  h1.cover { font-family:var(--vs-font-head); font-weight:800; font-size:104px;
+             line-height:1.02; letter-spacing:-0.025em; max-width:15ch; }
+  h2.title { font-family:var(--vs-font-head); font-weight:700; font-size:72px;
+             line-height:1.06; letter-spacing:-0.02em; max-width:16ch; }
+  p.body   { font-family:var(--vs-font-body); font-size:38px; line-height:1.45;
+             max-width:24ch; margin-top:28px; color:var(--vs-ink-soft); }
+  .slide--gradient p.body, .slide--dark p.body { color:rgba(255,255,255,.92); }
+  .amber-word { color:var(--vs-amber); }
+  .grad-word { background:var(--vs-gradient); -webkit-background-clip:text;
+               background-clip:text; -webkit-text-fill-color:transparent; }
+
+  .swipe { font-family:var(--vs-font-head); font-weight:600; font-size:34px;
+           display:inline-flex; align-items:center; gap:14px; }
+  .swipe .arrow { font-size:40px; }
+
+  .cta-btn { align-self:flex-start; font-family:var(--vs-font-head); font-weight:600;
+             font-size:38px; background:#fff; color:var(--vs-pink); padding:24px 48px;
+             border-radius:999px; margin-top:8px; }
+
+  /* Footer on every slide */
+  .footer { position:absolute; left:88px; right:88px; bottom:56px;
+            display:flex; align-items:center; justify-content:space-between;
+            font-family:var(--vs-font-head); font-weight:700; font-size:30px; }
+  .footer .pageno { font-weight:600; opacity:.6; }
+  .slide--gradient .footer, .slide--dark .footer { color:#fff; }
+
+  @media print { body { background:#fff; gap:0; padding:0; } }
+</style>
+</head>
+<body>
+
+  <!-- ============ SLIDE 1 — COVER / HOOK ============ -->
+  <section class="slide slide--gradient">
+    <span class="blob blob--amber"></span>
+    <span class="blob blob--ring"></span>
+    <span class="eyebrow">Versantus guide</span>
+    <div class="spacer"></div>
+    <h1 class="cover">5 signs your website is <span class="amber-word">holding you back</span>.</h1>
+    <div class="spacer"></div>
+    <span class="swipe">Swipe to find out <span class="arrow">→</span></span>
+    <div class="footer"><span>Versantus</span><span class="pageno">versantus.co.uk</span></div>
+  </section>
+
+  <!-- ============ SLIDE 2 — CONTEXT ============ -->
+  <section class="slide slide--mist">
+    <span class="eyebrow">The problem</span>
+    <div class="spacer"></div>
+    <h2 class="title">Your site should be your hardest-working team member.</h2>
+    <p class="body">If it's slow, confusing or off-brand, it's quietly costing you customers — every single day.</p>
+    <div class="spacer"></div>
+    <div class="footer"><span>Versantus</span><span class="pageno">01</span></div>
+  </section>
+
+  <!-- ============ SLIDE 3 — VALUE 01 (pink) ============ -->
+  <section class="slide">
+    <div class="num num--pink">01</div>
+    <h2 class="title">It's slow to load</h2>
+    <p class="body">Every extra second of load time costs you visitors. Fast is a feature — and a ranking signal.</p>
+    <div class="spacer"></div>
+    <div class="footer"><span>Versantus</span><span class="pageno">02</span></div>
+  </section>
+
+  <!-- ============ SLIDE 4 — VALUE 02 (purple) ============ -->
+  <section class="slide slide--mist">
+    <div class="num num--purple">02</div>
+    <h2 class="title">People can't find what they need</h2>
+    <p class="body">Confusing navigation sends users straight back to Google. Clarity beats clever, always.</p>
+    <div class="spacer"></div>
+    <div class="footer"><span>Versantus</span><span class="pageno">03</span></div>
+  </section>
+
+  <!-- ============ SLIDE 5 — VALUE 03 (amber) ============ -->
+  <section class="slide">
+    <div class="num num--amber">03</div>
+    <h2 class="title">It doesn't work on a phone</h2>
+    <p class="body">Most of your visitors are on mobile. If the experience breaks there, so does their trust.</p>
+    <div class="spacer"></div>
+    <div class="footer"><span>Versantus</span><span class="pageno">04</span></div>
+  </section>
+
+  <!-- ============ SLIDE 6 — PROOF / STAT (optional) ============ -->
+  <section class="slide slide--mist">
+    <span class="eyebrow">Worth knowing</span>
+    <div class="spacer"></div>
+    <h2 class="title"><span class="grad-word">53%</span> of mobile users leave a site that takes over 3 seconds to load.</h2>
+    <div class="spacer"></div>
+    <div class="footer"><span>Versantus</span><span class="pageno">05</span></div>
+  </section>
+
+  <!-- ============ SLIDE 7 — CTA / CLOSE ============ -->
+  <section class="slide slide--dark">
+    <span class="blob blob--ring"></span>
+    <span class="eyebrow">Let's fix it</span>
+    <div class="spacer"></div>
+    <h2 class="title">Want a site that works as hard as you do?</h2>
+    <p class="body">We design and build world-class websites for ambitious organisations — clear, fast and built to last.</p>
+    <div style="height:40px"></div>
+    <span class="cta-btn">Start a project →</span>
+    <div class="spacer"></div>
+    <div class="footer"><span>Versantus</span><span class="pageno">versantus.co.uk</span></div>
+  </section>
+
+</body>
+</html>
