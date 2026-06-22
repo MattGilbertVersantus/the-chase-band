@@ -86,10 +86,12 @@ body, p   { font-family: "Open Sans", sans-serif; line-height: 1.6; color: var(-
 - `references/voice-and-tone.md` — how Versantus writes: principles, sentence patterns,
   vocabulary, social caption formulas, and worked before/after examples.
 - `references/linkedin-carousel.md` — how to build a LinkedIn carousel (document post):
-  specs, slide structure, copy guidance, and how to export the deck to PDF.
+  specs, slide structure, copy guidance, a **caption generator** with ready-made example
+  captions, the 4:5 vs 1:1 ratio choice, and how to export the deck to PDF.
 - `assets/versantus-tokens.css` — drop-in CSS variables + base styles.
 - `assets/social-card-template.html` — ready-to-edit Instagram/LinkedIn post.
-- `assets/linkedin-carousel-template.html` — multi-slide LinkedIn carousel, print-to-PDF ready.
+- `assets/linkedin-carousel-template.html` — multi-slide LinkedIn carousel (4:5 portrait, 1080×1350), print-to-PDF ready.
+- `assets/linkedin-carousel-square-template.html` — square 1:1 carousel variant (1080×1080), print-to-PDF ready.
 - `assets/landing-template.html` — ready-to-edit web page / section.
 
 Sources: brand fundamentals are the canonical Versantus spec; positioning and voice

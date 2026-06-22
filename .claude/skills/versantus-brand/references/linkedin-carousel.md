@@ -55,6 +55,84 @@ Rules of thumb:
   of context, a soft CTA, and 3–6 lower-key hashtags
   (e.g. #UXDesign #Drupal #DigitalAgency #Oxford).
 
+## Caption generator
+
+The caption sits above the carousel in the feed — it does the job of earning the swipe.
+Build it from these four parts:
+
+1. **Hook (line 1–2):** the single most interesting promise, claim or question. It must
+   stand alone — many people only ever read this line. No "I'm excited to share…".
+2. **Context (2–4 short lines):** why it matters, in plain language. One line breaks.
+3. **Swipe prompt + CTA:** point at the carousel, then one clear next step
+   ("Swipe through for the 5 signs 👇", then "Need a hand? Let's talk →").
+4. **Hashtags:** 3–6, lower-key and relevant. Group on the last line.
+
+Rules: British spelling, sentence case, ≤1 exclamation mark, 1–4 emoji max, jargon-free,
+warm and confident (see `voice-and-tone.md`). Keep it tight — the first ~2 lines show
+before "…more".
+
+### Ready-made example captions
+
+**Insight / educational deck**
+> Your website should be your hardest-working team member.
+>
+> But slow load times, clunky navigation and a poor mobile experience quietly send
+> customers to your competitors — every single day.
+>
+> We pulled together 5 signs your site might be holding you back (and what to do about each).
+>
+> Swipe through 👉 and if any of them sound familiar, let's have a chat →
+>
+> #WebDesign #UXDesign #Drupal #DigitalAgency #Oxford
+
+**Project / launch deck**
+> New site, live today. 🎉
+>
+> We worked with [Client] to turn a slow, hard-to-update website into a fast, accessible
+> platform their whole team loves running.
+>
+> Here's how we did it, slide by slide 👇
+>
+> Got an ambitious project in mind? Say hello →
+>
+> #CaseStudy #WebDevelopment #UX #Drupal #Oxford
+
+**Culture / hiring deck**
+> We've just been named one of the UK's Best Workplaces in Tech. Here's what that
+> actually feels like day to day.
+>
+> Swipe for a look behind the scenes at life at Versantus 💜
+>
+> We're growing, too — if it sounds like your kind of place, get in touch →
+>
+> #LifeAtVersantus #Hiring #TechCulture #Oxford
+
+**Thought-leadership / opinion deck**
+> "Make it pop" isn't a brief. 😅
+>
+> Good design isn't decoration — it's the difference between users who get it and users
+> who bounce. Here are 6 principles we come back to on every project.
+>
+> Swipe through 👉 which one does your site get wrong most often?
+>
+> #DesignThinking #UX #BrandDesign #DigitalAgency
+
+> Swap `[Client]`, stats and links for the real thing. Match the caption's hook to the
+> carousel's cover slide so they reinforce each other.
+
+## Aspect ratios — 4:5 and 1:1
+
+Two ready-made templates, same brand system:
+
+- **`assets/linkedin-carousel-template.html` — 4:5 portrait (1080×1350).** Default. Fills
+  the most feed space on mobile; best for most carousels.
+- **`assets/linkedin-carousel-square-template.html` — 1:1 square (1080×1080).** Use when
+  the content is also going to Instagram, or when you want a tighter, more compact deck.
+
+Pick one ratio and keep it consistent across the whole deck — never mix page sizes in a
+single PDF. Both export to PDF the same way (below).
+
+
 ## Workflow
 
 1. Decide the **angle** (one topic) and outline 6–10 slides — one idea each.
