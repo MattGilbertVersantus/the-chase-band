@@ -46,8 +46,12 @@ Rules:
    defines every colour, font, spacing, radius and shadow as CSS variables. Link the
    Google Fonts (Outfit + Open Sans) shown below. Don't invent new colours.
 3. **Build from a template.** Use `assets/social-card-template.html` (1080×1080 / 1080×1350
-   posts), `assets/linkedin-carousel-template.html` (multi-slide PDF carousels), or
+   posts), `assets/linkedin-carousel-template.html` (multi-slide PDF carousels),
+   `assets/presentation-template.html` (slide decks / webinars), or
    `assets/landing-template.html` (web sections) as the starting structure, then adapt content.
+   **For any slide deck, always start from the presentation template** — see
+   `references/presentation-deck.md`. Building a deck from scratch makes the look drift
+   (dark-everything, small type, weak numbering).
 4. **Write the copy** using `references/voice-and-tone.md`.
 5. **Check against the brand checklist** in `references/brand-guidelines.md` before
    delivering.
@@ -88,10 +92,14 @@ body, p   { font-family: "Open Sans", sans-serif; line-height: 1.6; color: var(-
 - `references/linkedin-carousel.md` — how to build a LinkedIn carousel (document post):
   specs, slide structure, copy guidance, a **caption generator** with ready-made example
   captions, the 4:5 vs 1:1 ratio choice, and how to export the deck to PDF.
+- `references/presentation-deck.md` — how to build an on-brand slide deck (webinar,
+  Lunch & Learn, pitch): the surface rhythm, slide types, the signature gradient divider
+  numbers, structure, speaker notes, and the drift to avoid.
 - `assets/versantus-tokens.css` — drop-in CSS variables + base styles.
 - `assets/social-card-template.html` — ready-to-edit Instagram/LinkedIn post.
 - `assets/linkedin-carousel-template.html` — multi-slide LinkedIn carousel (4:5 portrait, 1080×1350), print-to-PDF ready.
 - `assets/linkedin-carousel-square-template.html` — square 1:1 carousel variant (1080×1080), print-to-PDF ready.
+- `assets/presentation-template.html` — on-brand 16:9 slide deck (nav, speaker notes, print-to-PDF).
 - `assets/landing-template.html` — ready-to-edit web page / section.
 
 Sources: brand fundamentals are the canonical Versantus spec; positioning and voice
